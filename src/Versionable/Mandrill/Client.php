@@ -21,24 +21,24 @@ class Client
     
     protected $client;
     
-    private $key;
+    private $apiKey;
     
-    public function __construct($key = null)
+    public function __construct($apiKey = null)
     {
-        $this->key = $key;
+        $this->apiKey = $apiKey;
         
         $this->client = new HTTPClient(new Curl());
     }
     
-    public function setKey($key)
+    public function setApiKey($apiKey)
     {
-        $this->key = $key;
+        $this->apiKey = $apiKey;
     }
     
     public function send($uri, array $payload = array())
     {
         // add key to payload
-        $payload['key'] = $this->key;
+        $payload['key'] = $this->apiKey;
         
         $request = new Request(new URL(strtr(static::API_URL, array(
             ':action' => $uri
