@@ -12,29 +12,33 @@
          syntaxCheck="false"
          bootstrap="tests/bootstrap.php">
 
-  <testsuites>
-    <testsuite name="Mandrill Test Suite">
-      <directory>./tests/</directory>
-    </testsuite>
-  </testsuites>
+    <testsuites>
+        <testsuite name="Mandrill Test Suite">
+            <directory>./tests/</directory>
+        </testsuite>
+    </testsuites>
+  
+    <php>
+        <const name="API_KEY" value=""/>
+    </php>
 
-  <logging>
-    <log type="coverage-html"
-         target="./build/tests/report/coverage"
-         charset="UTF-8"
-         yui="true"
-         highlights="true"/>
-    <log type="testdox-html"
-         target="./build/tests/report/testdox.html"/>
-    <log type="junit"
-         target="./build/tests/report/logfile.xml"
-         logIncompleteSkipped="false"/>
-  </logging>
+    <logging>
+        <log type="coverage-html"
+            target="./build/tests/report/coverage"
+            charset="UTF-8"
+            yui="true"
+            highlights="true"/>
+        <log type="testdox-html"
+            target="./build/tests/report/testdox.html"/>
+        <log type="junit"
+            target="./build/tests/report/logfile.xml"
+            logIncompleteSkipped="false"/>
+    </logging>
 
-<filter>
-  <whitelist>
-    <directory suffix=".php">src</directory>
-  </whitelist>
-</filter>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
 
 </phpunit>
