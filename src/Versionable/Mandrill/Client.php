@@ -2,6 +2,9 @@
 
 namespace Versionable\Mandrill;
 
+use Versionable\Mandrill\Exception\ValidationErrorException;
+use Versionable\Mandrill\Webhook\Exception\UnknownWebhookException;
+
 use Versionable\Prospect\Request\Request;
 use Versionable\Prospect\Response\Response;
 use Versionable\Prospect\Url\Url;
@@ -54,7 +57,16 @@ class Client
         if ($response->getCode() != 200) {
             $data = json_decode($response->getContent());
             
-            throw new \RuntimeException($data->message);
+            switch ($data->name) {
+                case "ValidationError":
+                    throw new ValidationErrorException($data->message, $data->code);
+                    break;
+                case "Unknown_Webhook":
+                    throw new UnknownWebhookException($data->message);
+                    break;
+                default:
+                    throw new \RuntimeException($data->message, $data->code);
+            }
         }
         
         return $response->getContent();
