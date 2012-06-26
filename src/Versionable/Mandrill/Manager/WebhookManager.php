@@ -13,6 +13,27 @@ class WebhookManager extends Manager
 {
     const API_BASE = '/webhooks/';
     
+    public function listWebhooks()
+    {
+        $response = $this->send('list');
+        
+        $webhooks = array();
+        foreach ($response as $data) {
+            $webhooks[] = $this->createWebhook($data);
+        }
+        
+        return $webhooks;
+    }
+    
+    public function info($id)
+    {
+        $response = $this->send('info', array(
+            'id' => $id
+        ));
+        
+        return $this->createWebhook($response);
+    }
+    
     public function add(Webhook $webhook)
     {
         $response = $this->send('add', array(
@@ -21,6 +42,30 @@ class WebhookManager extends Manager
         ));
         
         return $this->createWebhook($response);
+    }
+    
+    public function update(Webhook $webhook)
+    {
+        if (null === $webhook->getId()) {
+            throw new \InvalidArgumentException('');
+        }
+        
+        $response = $this->send('update', array(
+            'id' => $webhook->getId(),
+            'url' => $webhook->getUrl(),
+            'events' => $webhook->getEvents()
+        ));
+        
+        return $this->createWebhook($response);
+    }
+    
+    public function delete($id)
+    {
+        $this->send('delete', array(
+            'id' => $id
+        ));
+        
+        return true;
     }
     
     private function createWebhook(\StdClass $data)
