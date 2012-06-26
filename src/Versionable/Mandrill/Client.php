@@ -4,6 +4,7 @@ namespace Versionable\Mandrill;
 
 use Versionable\Mandrill\Exception\ValidationErrorException;
 use Versionable\Mandrill\Webhook\Exception\UnknownWebhookException;
+use Versionable\Mandrill\Url\Exception\UnknownUrlException;
 
 use Versionable\Prospect\Request\Request;
 use Versionable\Prospect\Response\Response;
@@ -64,8 +65,11 @@ class Client
                 case "Unknown_Webhook":
                     throw new UnknownWebhookException($data->message);
                     break;
+                case "Unknown_Url":
+                    throw new UnknownUrlException($data->message);
+                    break;
                 default:
-                    throw new \RuntimeException($data->message, $data->code);
+                    throw new \RuntimeException(sprintf('%s: %s', $data->name, $data->message), $data->code);
             }
         }
         
