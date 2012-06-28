@@ -1,5 +1,5 @@
 {
-    "hash": "5a0d428b5327092e5a0d121c8efe9d75",
+    "hash": "6e60ef8ef7468eddc4a2c7091987700d",
     "packages": [
         {
             "package": "versionable/common",
@@ -13,15 +13,26 @@
             "alias-version": "1.0.9999999.9999999-dev"
         },
         {
-            "package": "versionable/prospect",
+            "package": "versionable/ferret",
             "version": "dev-master",
             "alias-pretty-version": "1.0.x-dev",
             "alias-version": "1.0.9999999.9999999-dev"
         },
         {
+            "package": "versionable/ferret",
+            "version": "dev-master",
+            "source-reference": "b9491360cd7b4d4ca9fe514d44d005e88e433535"
+        },
+        {
             "package": "versionable/prospect",
             "version": "dev-master",
             "source-reference": "4e4db99ff12093aea3d43218c5ed36c96f7c5a22"
+        },
+        {
+            "package": "versionable/prospect",
+            "version": "dev-master",
+            "alias-pretty-version": "1.0.x-dev",
+            "alias-version": "1.0.9999999.9999999-dev"
         }
     ],
     "packages-dev": null,
