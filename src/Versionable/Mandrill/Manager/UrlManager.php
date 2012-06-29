@@ -4,6 +4,7 @@ namespace Versionable\Mandrill\Manager;
 
 use Versionable\Mandrill\Url\Url;
 use Versionable\Mandrill\Url\TimeSeries;
+use Versionable\Common\Collection\Set;
 
 /**
  * Description of UserManager
@@ -16,11 +17,11 @@ class UrlManager extends Manager
     
     public function listUrls()
     {
-        $response = $this->send('list');
+        $response = $this->doSend('list');
         
-        $urls = array();
+        $urls = new Set();
         foreach ($response as $data) {
-            $urls[] = $this->creatUrl($data);
+            $urls->add($this->createUrl($data));
         }
         
         return $urls;
@@ -28,13 +29,13 @@ class UrlManager extends Manager
     
     public function search($query)
     {
-        $response = $this->send('search', array(
+        $response = $this->doSend('search', array(
             'q' => $query
         ));
         
-        $urls = array();
+        $urls = new Set();
         foreach ($response as $data) {
-            $urls = $this->createUrl($data);
+            $urls->add($this->createUrl($data));
         }
         
         return $urls;
@@ -42,20 +43,19 @@ class UrlManager extends Manager
     
     public function history($url)
     {
-        $response = $this->send('time-series', array(
+        $response = $this->doSend('time-series', array(
             'url' => $url
         ));
         
-        $history = array();
+        $history = new Set();
         foreach ($response as $data) {
             $timeSeries = new TimeSeries();
             
             $timeSeries->setTime(new \DateTime($data->time));
             $timeSeries->setSent($data->sent);
             $timeSeries->setClients($data->clicks);
-            $timeSeries->setUniqueClicks($data->unique_clicks);
             
-            $history[] = $timeSeries;
+            $history->add($timeSeries);
         }
         
         return $history;
@@ -65,7 +65,6 @@ class UrlManager extends Manager
     {
         $url = new Url();
         
-        $url->setClients($data->clients);
         $url->setSent($data->sent);
         $url->setUniqueClicks($data->unique_clicks);
         $url->setUrl($data->url);
