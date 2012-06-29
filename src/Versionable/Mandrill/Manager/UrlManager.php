@@ -53,7 +53,11 @@ class UrlManager extends Manager
             
             $timeSeries->setTime(new \DateTime($data->time));
             $timeSeries->setSent($data->sent);
-            $timeSeries->setClients($data->clicks);
+            $timeSeries->setClicks($data->clicks);
+            /**
+             * Currently missing from from API 
+             */
+            //$timeSeries->setUniqueClicks($data->unique_clicks);
             
             $history->add($timeSeries);
         }
@@ -66,6 +70,7 @@ class UrlManager extends Manager
         $url = new Url();
         
         $url->setSent($data->sent);
+        $url->setClicks($data->clicks);
         $url->setUniqueClicks($data->unique_clicks);
         $url->setUrl($data->url);
         

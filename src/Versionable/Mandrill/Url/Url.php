@@ -43,15 +43,15 @@ class Url
     {
         $this->sent = $sent;
     }
-
-    public function getClients()
+    
+    public function getClicks()
     {
-        return $this->clients;
+        return $this->clicks;
     }
 
-    public function setClients($clients)
+    public function setClicks($clicks)
     {
-        $this->clients = $clients;
+        $this->clicks = $clicks;
     }
 
     public function getUniqueClicks()
