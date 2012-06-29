@@ -5,7 +5,6 @@ namespace Versionable\Mandrill\Manager;
 use Versionable\Mandrill\User\User;
 use Versionable\Mandrill\User\Sender;
 use Versionable\Mandrill\Statistic\Summary;
-
 use Versionable\Common\Collection\Set;
 
 /**
