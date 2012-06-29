@@ -3,6 +3,7 @@
 namespace Versionable\Mandrill\Manager;
 
 use Versionable\Mandrill\Webhook\Webhook;
+use Versionable\Common\Collection\Set;
 
 /**
  * Description of UserManager
@@ -15,11 +16,11 @@ class WebhookManager extends Manager
     
     public function listWebhooks()
     {
-        $response = $this->send('list');
+        $response = $this->doSend('list');
         
-        $webhooks = array();
+        $webhooks = new Set();
         foreach ($response as $data) {
-            $webhooks[] = $this->createWebhook($data);
+            $webhooks->add($this->createWebhook($data));
         }
         
         return $webhooks;
@@ -27,7 +28,7 @@ class WebhookManager extends Manager
     
     public function info($id)
     {
-        $response = $this->send('info', array(
+        $response = $this->doSend('info', array(
             'id' => $id
         ));
         
@@ -36,7 +37,7 @@ class WebhookManager extends Manager
     
     public function add(Webhook $webhook)
     {
-        $response = $this->send('add', array(
+        $response = $this->doSend('add', array(
             'url' => $webhook->getUrl(),
             'events' => $webhook->getEvents()
         ));
@@ -50,7 +51,7 @@ class WebhookManager extends Manager
             throw new \InvalidArgumentException('');
         }
         
-        $response = $this->send('update', array(
+        $response = $this->doSend('update', array(
             'id' => $webhook->getId(),
             'url' => $webhook->getUrl(),
             'events' => $webhook->getEvents()
@@ -61,7 +62,7 @@ class WebhookManager extends Manager
     
     public function delete($id)
     {
-        $this->send('delete', array(
+        $this->doSend('delete', array(
             'id' => $id
         ));
         
