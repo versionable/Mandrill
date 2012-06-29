@@ -3,6 +3,7 @@
 namespace Versionable\Mandrill\User;
 
 use Versionable\Mandrill\Statistic\Summary;
+use Versionable\Common\Collection\Map;
 
 /**
  * Description of User
@@ -28,6 +29,7 @@ class User
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->stats = new Map();
     }
     
     public function getUsername()
@@ -94,7 +96,7 @@ class User
     
     public function addStat(Summary $stat)
     {
-        $this->stats[$stat->getRange()] = $stat;
+        $this->stats->put($stat->getRange(), $stat);
     }
 
     public function getCreatedAt()
