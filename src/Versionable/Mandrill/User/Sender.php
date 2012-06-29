@@ -13,6 +13,8 @@ class Sender extends Aggregate
 {
     protected $address;
     
+    protected $createdAt;
+    
     public function getAddress()
     {
         return $this->address;
@@ -21,5 +23,15 @@ class Sender extends Aggregate
     public function setAddress($address)
     {
         $this->address = $address;
+    }
+    
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
     }
 }

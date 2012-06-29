@@ -6,6 +6,8 @@ use Versionable\Mandrill\User\User;
 use Versionable\Mandrill\User\Sender;
 use Versionable\Mandrill\Statistic\Summary;
 
+use Versionable\Common\Collection\Set;
+
 /**
  * Description of UserManager
  *
@@ -17,44 +19,49 @@ class UserManager extends Manager
     
     public function ping()
     {
-        return $this->send('ping');
+        return $this->doSend('ping');
     }
     
     public function ping2()
     {
-        return (array) $this->send('ping2');
+        return (array) $this->doSend('ping2');
     }
     
     public function info()
     {
-        $response = $this->send('info');
+        $response = $this->doSend('info');
         
         return $this->createUser($response);
     }
     
     public function senders()
     {
-        $response = $this->send('senders');
+        $response = $this->doSend('senders');
         
-        $senders = array();
+        $senders = new Set();
         foreach ($response as $data) {
-            $sender = new Sender();
-            
-            $sender->setAddress($data->address);
-            $sender->setSent($data->sent);
-            $sender->setHardBounces($data->hard_bounces);
-            $sender->setSoftBounces($data->soft_bounces);
-            $sender->setRejects($data->rejects);
-            $sender->setComplaints($data->complaints);
-            $sender->setUnsubs($data->unsubs);
-            $sender->setOpens($data->opens);
-            $sender->setClicks($data->clicks);
-            $sender->setCreatedAt(new \DateTime($data->created_at));
-            
-            $senders[] = $sender;
+            $senders->add($this->createSender($data));
         }
         
         return $senders;
+    }
+    
+    private function createSender(\stdClass $data)
+    {
+        $sender = new Sender();
+            
+        $sender->setAddress($data->address);
+        $sender->setSent($data->sent);
+        $sender->setHardBounces($data->hard_bounces);
+        $sender->setSoftBounces($data->soft_bounces);
+        $sender->setRejects($data->rejects);
+        $sender->setComplaints($data->complaints);
+        $sender->setUnsubs($data->unsubs);
+        $sender->setOpens($data->opens);
+        $sender->setClicks($data->clicks);
+        $sender->setCreatedAt(new \DateTime($data->created_at));
+        
+        return $sender;
     }
     
     private function createUser(\stdClass $data)
