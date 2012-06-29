@@ -31,11 +31,11 @@ abstract class Manager
         $this->client = $client;
     }
     
-    protected function doSend($action, Set $payload = null)
+    protected function doSend($action, $payload = null)
     {
         if (null === $payload) {
             $payload = array();
-        } else {
+        } elseif ($payload instanceof Set) {
             $payload = $this->buildPayload($payload);
         }
         
