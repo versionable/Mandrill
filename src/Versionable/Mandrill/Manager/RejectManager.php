@@ -2,6 +2,7 @@
 
 namespace Versionable\Mandrill\Manager;
 
+use Versionable\Common\Collection\Set;
 use Versionable\Mandrill\Reject\Reject;
 
 /**
@@ -15,21 +16,21 @@ class RejectManager extends Manager
     
     public function listRejects()
     {
-        $response = $this->send('list');
+        $response = $this->doSend('list');
         
-        $urls = array();
+        $rejects = new Set();
         foreach ($response as $data) {
-            $urls[] = $this->creatUrl($data);
+            $rejects->add($this->creatReject($data));
         }
         
-        return $urls;
+        return $rejects;
     }
     
     public function delete($email)
     {
-        $response = $this->send('delete', array(
+        $response = $this->doSend('delete', new Set(array(
             'email' => $email
-        ));
+        )));
         
         return $response->deleted;
     }
