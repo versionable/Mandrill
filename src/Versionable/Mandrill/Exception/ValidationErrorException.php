@@ -14,9 +14,10 @@ class ValidationErrorException extends \InvalidArgumentException
         list($message, $json) = explode(": ", $message);
         
         $errors = "";
-        
-        foreach (json_decode($json) as $field => $error) {
-            $errors .= sprintf("\t%s: %s\r\n", $field, $error);
+        if (null !== $json) {
+            foreach (json_decode($json) as $field => $error) {
+                $errors .= sprintf("\t%s: %s\r\n", $field, $error);
+            }
         }
         
         parent::__construct(sprintf("%s:\r\n%s", $message, $errors), $code);
