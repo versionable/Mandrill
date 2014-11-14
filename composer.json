@@ -18,11 +18,7 @@
         "versionable/prospect": "1.*",
         "versionable/ferret": "1.*"
     },
-    "require-dev": {
-        "php": ">=5.3.0",
-        "versionable/prospect": "1.*",
-        "versionable/ferret": "1.*"
-    },
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": {
             "Versionable\\Mandrill": "src"
